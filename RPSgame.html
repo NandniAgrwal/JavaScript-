@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: rgba(210, 245, 237, 0.621);
+        }
+        h1{
+            justify-content: center;
+            display: flex;
+        }
+        .buttons{
+            justify-content: center;
+            display: flex;
+            gap:30px;
+            height: 50px;
+        }
+        .buttons button:hover{
+            background-color: rgb(122, 122, 165);;
+        }
+        p{
+            justify-content: center;
+            display:flex;
+            font-size: 20px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Rock Paper Scissors Game</h1>
+    <div class="game">
+        <div class="buttons">
+            <button onclick="playround('Rock')">Rock</button>
+            <button onclick="playround('Paper')">Paper</button>
+            <button onclick="playround('Scissors')">Scissors</button>
+        </div>
+
+        <p id="round">Round:0/10</p>
+        <p id="mssg">Make Your Move!</p>
+        <p id="score">You:0 | Computer:0</p>
+    </div>
+
+    <script>
+        let round = 0;
+        let playerscore = 0;
+        let computerscore = 0;
+
+        function getComputerChoice(){
+            const choices = ["Rock" , "Paper" , "Scissors"];
+            return choices[Math.floor(Math.random()*3)];    
+        }
+
+        function playround(playerChoice){
+            if(round>=10){
+                document.getElementById("mssg").innerText = "Game over! Refresh to paly again!"
+                return;
+            }
+            round++;
+            document.getElementById("round").innerText = `Round : ${round}/10`;
+
+            let computerChoice = getComputerChoice();
+            let mssg = "";
+
+            if(playerChoice === computerChoice){
+                mssg = `Draw! ${playerChoice}`;
+            }
+            else if(
+                (playerChoice==="Rock" && computerChoice==="Scissors")||
+                (playerChoice==="Paper" && computerChoice==="Rock")||
+                (playerChoice==="Scissors" && computerChoice==="Paper")
+            ) {
+                playerscore++;
+                mssg = `You Win! ${playerChoice} beats ${computerChoice}`;
+            }
+            else{
+                computerscore++;
+                mssg = `You Lost! ${computerChoice} beats ${playerChoice}`;
+            }
+            document.getElementById("mssg").innerText = mssg;
+            document.getElementById("score").innerText = `You: ${playerscore} | Computer: ${computerscore}`;
+
+            if(round == 10){
+                if(playerscore > computerscore){
+                    document.getElementById("mssg").innerText = "You are the final winner!";
+                }
+                else if(computerscore > playerscore){
+                    document.getElementById("mssg").innerText = "Computer wins the game!";
+                }
+                else{
+                    document.getElementById("mssg").innerText = "The game is Draw!";
+                }
+            }
+
+        }
+    </script>
+</body>
+
+</html>
