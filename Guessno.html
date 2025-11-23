@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: rgb(245, 184, 137);
+        }
+        h1{
+            justify-content: center;
+            display: flex;
+            font-size: 50px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        p{
+            font-size: 20px;
+            justify-content: center;
+            display: flex;
+        }
+        input{
+            padding: 8px;
+            font-size: 16px;
+            width: 120px;
+            margin-left: 600px;
+            
+        }
+        button{
+            padding: 8px;
+            font-size: 16px;
+            width: 120px;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+        button:hover{
+            background-color: #f4511e;
+        }
+        #playAgain {
+            background: #1976d2;
+            margin-top: 15px;
+            display: block;
+            margin: 10px auto;
+        }
+        #playAgain:hover {
+            background: rgb(233, 167, 81);
+        }
+        #msg {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Guess The Number (1-100)</h1>
+    <p>Try to guess the number in 5 attempt!</p>
+
+    <input type="number" id="guessInput" placeholder="Enter Guess">
+    <button onclick="checkguess()">Submit</button>
+
+    <p id="mssg">Make Your Guess!</p>
+    <p id="chancesleft">chances Left:5</p>
+
+    <button id="playAgain" onclick="resetgame()" style="display: none;">play Again</button>
+
+    <script>
+        let randomno = Math.floor(Math.random()*100)+1;
+        let chances = 5;
+
+        function checkguess(){
+            if(chances <= 0) return;
+
+            const userguess = Number(document.getElementById("guessInput").value);
+
+            if(!userguess){
+                document.getElementById("mssg").innerHTML = "please enter a valid number!";
+                return;
+            }
+            if(userguess === randomno){
+                document.getElementById("mssg").innerHTML = `Congratulations! <b>${randomno}</b>`;
+                endgame();
+                return;
+            }
+            chances--;
+
+            if(userguess > randomno){
+                document.getElementById("mssg").innerHTML = "Too High! Try Again";
+            }
+            else{
+                document.getElementById("mssg").innerHTML = "Too Low! Try Again";
+            }
+            
+            document.getElementById("chancesleft").innerHTML=`Chances Left: ${chances}`;
+
+            if(chances === 0){
+                document.getElementById("mssg").innerHTML=`Game Over! The no was <b>${randomno}</b>`;
+                endgame();
+            }
+        }
+        
+        function endgame(){
+            document.getElementById("playAgain").style.display="block";
+            document.getElementById("guessInput").disabled=true;
+        }
+
+        function resetgame(){
+            document.getElementById("guessInput").value = "";
+            document.getElementById("guessInput").disabled= false;
+            document.getElementById("mssg").innerHTML= "Make your guess!";
+            document.getElementById("Chnacesleft").innerHTML= "Chances Left: 5";
+            document.getElementById("playAgain").style.display="none"; 
+        }
+    </script>
+</body>
+</html>
